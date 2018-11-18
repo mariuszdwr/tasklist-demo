@@ -110,4 +110,5 @@ app.listen(process.env.PORT,process.env.IP,function(){
     console.log("Task List Server started!");
     console.log("IP address: ", process.env.IP);
     console.log("PORT: ", process.env.PORT);
+    console.log("this line was added on local pc");
 })
