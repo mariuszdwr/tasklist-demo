@@ -109,7 +109,7 @@ app.get("*", function(req,res){
 
 app.listen(config.PORT,config.IP,function(){
     console.log("Task List Server started!");
-    console.log("IP address: ", process.env.IP);
-    console.log("PORT: ", process.env.PORT);
-    console.log("this line was added on local pc");
+    console.log("IP address: ", config.IP);
+    console.log("PORT: ", config.PORT);
+   
 })
