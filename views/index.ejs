@@ -1,0 +1,37 @@
+<% include header %>
+
+        <div class="ui main container center">
+            <div class="ui header huge">Tasks</div>
+            <div class="ui top segment atached">
+
+             <div class="ui divided items">
+<% tasks.forEach(function(task){ %>           
+
+                 <div class="item">
+                    <div class="content">
+                         <div class="header">
+                             <%=task.title%>
+                             
+                         </div>
+                         <div class="description"><%=task.description%></div>
+                         <span class="meta"><%=task.created.toLocaleString()%></span>
+                     
+                    </div>
+                 <div>
+                    <form action="/tasks/<%=task._id%>?_method=DELETE" method="POST">
+                       
+                                        <a class="ui small icon button blue" href="/tasks/<%=task._id%>"><i class="edit outline icon"></i></a>
+                                        <button class="ui small icon button red"><i class="alternate trash outline icon"></i></button>
+                                </form>
+                    </div>
+                 </div>
+                 
+<% }); %>               
+             </div>
+             
+            </div>
+            
+            
+        </div>
+
+<% include footer %>

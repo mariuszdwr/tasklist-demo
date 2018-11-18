@@ -1,0 +1,32 @@
+<% include header %>
+
+<div class="ui main container">
+    <div class="ui top segment atached">
+        <div class="ui header">
+            <%=task.title%>
+        </div>
+        <form class="ui form" action="/tasks/<%=task._id%>?_method=PUT" method="POST">
+
+            <div class="field">
+                <label>Title</label>
+                <input type="text" name="task[title]" required value="<%= task.title %>">
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea name="task[description]"><%= task.description %></textarea>
+            </div>
+            <input type="submit" class="ui button blue">
+            <form class="ui form" action="/tasks/<%=task._id%>?_method=DELETE" method="POST">
+                <button class="ui button red" type="submit"><i class="trash alternate outline icon"></i> Delete</button>
+            </form>
+        </form>
+        
+        
+    </div>
+    
+</div>
+
+
+<!--<script src="https://webdevbootcamp-mariuszdw.c9users.io/public/alert.js" type="text/javascript"></script>-->
+
+<% include footer %>
