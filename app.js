@@ -3,14 +3,15 @@ var express = require("express"),
     bodyParser = require("body-parser"),
     Task = require("./task-model"),
     methodOverride = require("method-override"),
-    seedDB = require("./seeds");
+    seedDB = require("./seeds"),
+    config = require("./config");
     
     
 
 var app = express();
 
 
-mongoose.connect("mongodb://localhost:27017/tasks_app",{useNewUrlParser: true});
+mongoose.connect(config.MONGODB_URI,{useNewUrlParser: true});
 // seed database if empty:
 //seedDB();
 
@@ -106,7 +107,7 @@ app.get("*", function(req,res){
     res.send("<h1>No page here...</h1")
 });
 
-app.listen(process.env.PORT,process.env.IP,function(){
+app.listen(config.PORT,config.IP,function(){
     console.log("Task List Server started!");
     console.log("IP address: ", process.env.IP);
     console.log("PORT: ", process.env.PORT);
