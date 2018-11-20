@@ -30,7 +30,7 @@ app.use(express.static(__dirname+'/public'));
 
 // middleware pass variables
 app.use(function(req,res,next){
-    res.locals.flashDescription = "test content";
+    res.locals.flashDescription = req.flash("flashDescription");
     res.locals.success = req.flash("success");
     
     
@@ -115,7 +115,7 @@ app.delete("/tasks/:id",function(req,res){
                     console.log("Deleted document: ", document);
                     console.log("=====================");
                     req.flash("success",`Deleted: ${document.title}`);
-                    req.flash("flashDescription", `test ${document.description}`);
+                    req.flash("flashDescription", document.description);
                     res.redirect("/tasks");
                 }
             });
