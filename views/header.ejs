@@ -15,3 +15,25 @@
             <a class="item" href="/"><i class="tasks icon"></i>Home</a>
             <a class="item right" href="/tasks/new"><i class="file outline icon"></i>Add New Task</a>
         </div>
+        <% if(success && success.length>0) { %>
+            <div class="ui container">
+                <div class="ui one steps">
+                    <div class="completed step">
+                        <i class="payment icon"></i>
+                        <div class="content">
+                            <div class="title">
+                               <%= success %>
+                            </div>
+                            
+                            <div class="description">
+                                <%= flashDescription %>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                <br>
+                
+            </div>
+        <% } %>

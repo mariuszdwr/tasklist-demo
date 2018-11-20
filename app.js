@@ -4,6 +4,8 @@ var express = require("express"),
     Task = require("./task-model"),
     methodOverride = require("method-override"),
     seedDB = require("./seeds"),
+    expressSession = require("express-session"),
+    flash = require("connect-flash"),
     config = require("./config");
     
     
@@ -16,10 +18,24 @@ mongoose.connect(config.MONGODB_URI,{useNewUrlParser: true});
 //seedDB();
 
 app.set("view engine","ejs");
+app.use(flash());
+app.use(expressSession({
+    secret: "My secret DanceWithTheDead",
+    resave: false,
+    saveUninitialized: false
+}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.use(express.static(__dirname+'/public'));
 
+// middleware pass variables
+app.use(function(req,res,next){
+    res.locals.flashDescription = "test content";
+    res.locals.success = req.flash("success");
+    
+    
+    next();
+})
     
 app.get("/",function(req,res){
     
@@ -80,6 +96,7 @@ app.put("/tasks/:id", function(req,res){
         } else {
             console.log("Task updated: ",task);
             console.log("=====================");
+            req.flash("success", `Updated: ${req.body.task.title}`);
             res.redirect("/tasks");
             
         }
@@ -87,18 +104,24 @@ app.put("/tasks/:id", function(req,res){
 });
 
 app.delete("/tasks/:id",function(req,res){
+    
+    
+                Task.findByIdAndDelete(req.params.id,function(err,document){
+                if (err) {
+                    console.log("Error deleting document with id: ", req.params.id );
+                    console.log(err);
+                    console.log("=====================");
+                } else {
+                    console.log("Deleted document: ", document);
+                    console.log("=====================");
+                    req.flash("success",`Deleted: ${document.title}`);
+                    req.flash("flashDescription", `test ${document.description}`);
+                    res.redirect("/tasks");
+                }
+            });
+        
    
-        Task.findByIdAndDelete(req.params.id,function(err,document){
-            if (err) {
-                console.log("Error deleting document with id: ", req.params.id );
-                console.log(err);
-                console.log("=====================");
-            } else {
-                console.log("Deleted document: ", document);
-                console.log("=====================");
-                res.redirect("/tasks");
-            }
-        });
+        
     
     
 });
